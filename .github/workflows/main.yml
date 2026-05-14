@@ -18,17 +18,16 @@ jobs:
       with:
         gradle-version: 8.1
 
-    - name: Find and Build Project
+    - name: Build APK
       run: |
-        # Ye command project folder ko auto-detect karegi
-        PROJECT_DIR=$(find . -name "build.gradle" -not -path "*/app/*" -exec dirname {} \;)
-        echo "Project found in: $PROJECT_DIR"
-        cd $PROJECT_DIR
-        gradle assembleDebug --stacktrace
+        # Folder ke andar jao aur build karo, errors ko ignore karne ki koshish karo
+        cd avdb_final
+        chmod +x gradlew
+        ./gradlew assembleDebug --stacktrace -Dorg.gradle.jvmargs="-Xmx2048m -XX:MaxMetaspaceSize=512m"
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: AllVideoDownloader-APK
-        path: "**/app/build/outputs/apk/debug/app-debug.apk"
+        path: "**/app/build/outputs/apk/debug/*.apk"
         
