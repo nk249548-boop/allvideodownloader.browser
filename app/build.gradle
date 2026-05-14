@@ -52,8 +52,12 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
 
-    // Room Database (Playlist)
+        // Room Database (Playlist)
     implementation 'androidx.room:room-runtime:2.6.1'
     implementation 'androidx.room:room-ktx:2.6.1'
     kapt 'androidx.room:room-compiler:2.5.2'
+
+    // Video Downloading Engine & FFmpeg (Ye humne naya add kiya)
+    implementation 'com.github.yausername.youtubedl-android:library:0.14.0'
+    implementation 'com.github.yausername.youtubedl-android:ffmpeg:0.14.0'
 }
