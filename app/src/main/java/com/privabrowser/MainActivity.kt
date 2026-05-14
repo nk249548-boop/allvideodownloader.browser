@@ -23,6 +23,8 @@ import androidx.lifecycle.lifecycleScope
 import com.privabrowser.databinding.ActivityMainBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import com.yausername.youtubedl_android.YoutubeDL
+import com.yausername.ffmpeg_android.FFmpeg
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,6 +42,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.hide()
+
+                // ENGINE START CODE
+        try {
+            YoutubeDL.getInstance().init(applicationContext)
+            FFmpeg.getInstance().init(applicationContext)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
         adBlocker = AdBlocker(this)
         lifecycleScope.launch { adBlocker.initialize() }
@@ -245,8 +255,15 @@ class MainActivity : AppCompatActivity() {
                 navigateTo(binding.urlBar.text.toString()); true
             } else false
         }
-
-        binding.btnDownload.setOnClickListener { showVideoDownloadDialog() }
+        
+               binding.btnDownload.setOnClickListener {
+            val currentUrl = binding.webView.url
+            if (currentUrl != null && (currentUrl.startsWith("http://") || currentUrl.startsWith("https://"))) {
+                showQualityPopup(currentUrl)
+            } else {
+                Toast.makeText(this, "Pehle koi video play karein!", Toast.LENGTH_SHORT).show()
+            }
+                }
 
         binding.btnPlaylist.setOnClickListener {
             startActivity(Intent(this, PlaylistActivity::class.java))
@@ -314,4 +331,48 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == PERMISSION_STORAGE && grantResults.firstOrNull() == PackageManager.PERMISSION_GRANTED)
             Toast.makeText(this, "Permission granted. Try downloading again.", Toast.LENGTH_SHORT).show()
     }
+      
+    // NAYA QUALITY POPUP FUNCTION
+    private fun showQualityPopup(videoUrl: String) {
+        Toast.makeText(this, "Video quality check ho rahi hai... Please wait", Toast.LENGTH_LONG).show()
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val request = com.yausername.youtubedl_android.YoutubeDLRequest(videoUrl)
+                val videoInfo = YoutubeDL.getInstance().getInfo(request)
+                val formats = videoInfo.formats
+                
+                val formatList = ArrayList<String>()
+                formats?.forEach { format ->
+                    if (format.height > 0) {
+                        val sizeMB = if (format.fileSize > 0) "${format.fileSize / (1024 * 1024)} MB" else "Unknown Size"
+                        formatList.add("${format.height}p (${format.ext}) - $sizeMB")
+                    }
+                }
+                
+                val finalQualities = formatList.distinct().toTypedArray()
+
+                launch(Dispatchers.Main) {
+                    if (finalQualities.isNotEmpty()) {
+                        AlertDialog.Builder(this@MainActivity)
+                            .setTitle("Select Video Quality")
+                            .setItems(finalQualities) { _, which ->
+                                val selected = finalQualities[which]
+                                Toast.makeText(this@MainActivity, "Download Start: $selected", Toast.LENGTH_SHORT).show()
+                                // Agle step mein hum yahan asal download lagayenge
+                            }
+                            .setNegativeButton("Cancel", null)
+                            .show()
+                    } else {
+                        Toast.makeText(this@MainActivity, "Koi quality nahi mili!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                launch(Dispatchers.Main) {
+                    Toast.makeText(this@MainActivity, "Error: ${e.message}", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+    }
+    
 }
