@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <!-- Main content: ProgressBar + WebView -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Thin progress bar on top -->
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:progressTint="#FF6600"
+            android:progressBackgroundTint="#EEEEEE"
+            android:visibility="gone"
+            android:max="100" />
+
+        <!-- WebView -->
+        <WebView
+            android:id="@+id/web_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- Bottom navigation bar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:background="#FFFFFF"
+            android:gravity="center_vertical"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:elevation="12dp">
+
+            <!-- Back -->
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_media_previous"
+                android:tint="#444444" />
+
+            <!-- Forward -->
+            <ImageButton
+                android:id="@+id/btn_forward"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_media_next"
+                android:tint="#444444" />
+
+            <!-- URL bar container -->
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/url_bar_light_bg"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="4dp">
+
+                    <EditText
+                        android:id="@+id/url_bar"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:hint="Search or type URL"
+                        android:hintTextColor="#BBBBBB"
+                        android:textColor="#111111"
+                        android:textSize="13sp"
+                        android:background="@null"
+                        android:imeOptions="actionGo"
+                        android:inputType="textUri"
+                        android:singleLine="true"
+                        android:selectAllOnFocus="true" />
+
+                    <!-- Tab count -->
+                    <TextView
+                        android:id="@+id/tv_tab_count"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:text="1"
+                        android:textSize="11sp"
+                        android:textColor="#333333"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:background="@drawable/tab_count_bg"
+                        android:layout_marginEnd="4dp" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <!-- Playlist button -->
+            <ImageButton
+                android:id="@+id/btn_playlist"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_media_rew"
+                android:tint="#444444" />
+
+            <!-- 3-dot overflow -->
+            <ImageButton
+                android:id="@+id/btn_overflow"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_menu_more"
+                android:tint="#444444" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- FLOATING DOWNLOAD BUTTON - appears when video detected -->
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="80dp">
+
+        <!-- Red glowing download FAB -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_download"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/stat_sys_download"
+            android:tint="#FFFFFF"
+            android:visibility="gone"
+            android:contentDescription="Download Video"
+            app:backgroundTint="#FF4500"
+            app:elevation="8dp"
+            xmlns:app="http://schemas.android.com/apk/res-auto"/>
+
+        <!-- Video count badge -->
+        <TextView
+            android:id="@+id/tv_video_count"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="top|end"
+            android:text="1"
+            android:textSize="10sp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:background="@drawable/download_btn_bg"
+            android:visibility="gone" />
+    </FrameLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

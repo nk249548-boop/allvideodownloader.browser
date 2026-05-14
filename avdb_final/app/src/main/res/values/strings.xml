@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">All Video Downloader Browser</string>
+    <string name="search_hint">Search or type URL</string>
+    <string name="downloading">Downloading…</string>
+    <string name="no_video">No video found on this page</string>
+    <string name="data_cleared">Browsing data cleared</string>
+</resources>
