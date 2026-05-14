@@ -20,14 +20,12 @@ jobs:
 
     - name: Build APK
       run: |
-        # Seedha root folder mein build karenge
-        chmod +x gradlew
-        ./gradlew assembleDebug --stacktrace -Dorg.gradle.jvmargs="-Xmx2048m -XX:MaxMetaspaceSize=512m"
+        # DHYAN DEIN: Yahan './gradlew' nahi, sirf 'gradle' use karna hai
+        gradle assembleDebug --stacktrace -Dorg.gradle.jvmargs="-Xmx2048m -XX:MaxMetaspaceSize=512m"
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: AllVideoDownloader-APK
-        # Path ko bhi seedha app folder pe set kar diya hai
         path: "app/build/outputs/apk/debug/*.apk"
         
