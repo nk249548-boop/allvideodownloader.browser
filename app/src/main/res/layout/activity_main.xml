@@ -127,27 +127,26 @@
     </LinearLayout>
 
     <!-- FLOATING DOWNLOAD BUTTON - appears when video detected -->
-    <FrameLayout
+        <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="80dp">
-
-        <!-- Red glowing download FAB -->
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_marginBottom="80dp"
+        android:elevation="16dp"> <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btn_download"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/stat_sys_download"
-            android:tint="#FFFFFF"
+            app:tint="#FFFFFF"
             android:visibility="gone"
             android:contentDescription="Download Video"
             app:backgroundTint="#FF4500"
-            app:elevation="8dp"
+            app:elevation="12dp"
+            app:pressedTranslationZ="16dp"
+            app:fabSize="normal"
             xmlns:app="http://schemas.android.com/apk/res-auto"/>
 
-        <!-- Video count badge -->
         <TextView
             android:id="@+id/tv_video_count"
             android:layout_width="20dp"
@@ -159,7 +158,8 @@
             android:textStyle="bold"
             android:gravity="center"
             android:background="@drawable/download_btn_bg"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:elevation="14dp" />
     </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
