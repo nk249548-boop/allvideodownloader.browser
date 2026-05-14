@@ -1,3 +1,4 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext.kotlin_version = "1.9.22"
     repositories {
@@ -10,13 +11,7 @@ buildscript {
     }
 }
 
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-
+// Ye 'allprojects' wala block poora hata dena hai kyunki ye settings.gradle mein ja chuka hai
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
