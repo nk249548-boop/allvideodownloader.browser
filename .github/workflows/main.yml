@@ -18,15 +18,17 @@ jobs:
       with:
         gradle-version: 8.1
 
-    - name: Build with Gradle
-      # Humne GitHub ko bataya ki code 'avdb_final' folder ke andar hai
-      run: gradle assembleDebug --stacktrace
-      working-directory: ./avdb_final 
+    - name: Find and Build Project
+      run: |
+        # Ye command project folder ko auto-detect karegi
+        PROJECT_DIR=$(find . -name "build.gradle" -not -path "*/app/*" -exec dirname {} \;)
+        echo "Project found in: $PROJECT_DIR"
+        cd $PROJECT_DIR
+        gradle assembleDebug --stacktrace
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: AllVideoDownloader-APK
-        # Path bhi folder ke hisaab se update kiya
-        path: avdb_final/app/build/outputs/apk/debug/app-debug.apk
+        path: "**/app/build/outputs/apk/debug/app-debug.apk"
         
