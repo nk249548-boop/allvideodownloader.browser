@@ -12,20 +12,21 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-        cache: gradle
 
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
       with:
-        gradle-version: 8.1 # Hum system ka gradle use karenge
+        gradle-version: 8.1
 
     - name: Build with Gradle
-      # Ab hum './gradlew' nahi, sirf 'gradle' use karenge
+      # Humne GitHub ko bataya ki code 'avdb_final' folder ke andar hai
       run: gradle assembleDebug --stacktrace
+      working-directory: ./avdb_final 
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: AllVideoDownloader-APK
-        path: app/build/outputs/apk/debug/app-debug.apk
+        # Path bhi folder ke hisaab se update kiya
+        path: avdb_final/app/build/outputs/apk/debug/app-debug.apk
         
