@@ -24,7 +24,7 @@ import com.privabrowser.databinding.ActivityMainBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.yausername.youtubedl_android.YoutubeDL
-import com.yausername.ffmpeg_android.FFmpeg
+import com.yausername.ffmpeg.FFmpeg
 
 class MainActivity : AppCompatActivity() {
 
